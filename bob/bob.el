@@ -23,7 +23,10 @@
 
 (defun question?(string)
   "Checks if string contains question"
-  (string-match "?$" (string-trim string)))
+  (let ((trimmed-string (string-trim string)))
+    (let ((string-length (length trimmed-string)))
+      (if (not (empty? trimmed-string))
+          (string-match "?" (substring trimmed-string (- string-length 1) string-length))))))
 
 (defun empty?(string)
   "Checks if string is empty"
