@@ -8,7 +8,20 @@
 
 ;;; Code:
 (defun build-robot()
-  "builds robot name"
+  "builds a robot"
+  (let ((name (random-name)))
+    (cons name '())))
+
+(defun robot-name(robot)
+  "returns name of the robot"
+  (car robot))
+
+(defun reset-robot(robot)
+  "resets robot"
+  (setcar robot (random-name)))
+
+(defun random-name()
+  "create a random name"
   (upcase (concat (random-char) (random-char) (random-num) (random-num) (random-num))))
 
 (defun random-char ()
