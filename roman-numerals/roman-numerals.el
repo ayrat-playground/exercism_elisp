@@ -1,0 +1,65 @@
+;;; roman-numerals.el --- roman-numerals Exercise (exercism)
+
+;;; Commentary:
+
+;;; Code:
+
+(defun to-roman(number)
+  "Convert arabic format number to roman format"
+  (cond ((<= number 9) (up-to-9 number))
+        ((< number 100) (up-to-100 number))
+        ((< number 1000) (up-to-1000 number))
+        ((<= number 3000) (up-to-3000 number))))
+
+(defun up-to-9(number)
+  (cond ((= 1 number) "I")
+        ((= 2 number) "II")
+        ((= 3 number) "III")
+        ((= 4 number) "IV")
+        ((= 5 number) "V")
+        ((= 6 number) "VI")
+        ((= 7 number) "VII")
+        ((= 8 number) "VIII")
+        ((= 9 number) "IX")))
+
+(defun up-to-100(number)
+  (let*  ((dec (/ number 10))
+          (digit (% number 10))
+          (roman-digit (up-to-9 digit))
+          (roman-dec (cond ((= 1 dec) "X")
+                           ((= 2 dec) "XX")
+                           ((= 3 dec) "XXX")
+                           ((= 4 dec) "XL")
+                           ((= 5 dec) "L")
+                           ((= 6 dec) "LX")
+                           ((= 7 dec) "LXX")
+                           ((= 8 dec) "LXXX")
+                           ((= 9 dec) "XC"))))
+    (concat roman-dec roman-digit)))
+
+(defun up-to-1000(number)
+  (let* ((cent (/ number 100))
+         (rem (% number 100))
+         (roman-rem (up-to-100 rem))
+         (roman-cent (cond ((= 1 cent) "C")
+                           ((= 2 cent) "CC")
+                           ((= 3 cent) "CCC")
+                           ((= 4 cent) "CD")
+                           ((= 5 cent) "D")
+                           ((= 6 cent) "DC")
+                           ((= 7 cent) "DCC")
+                           ((= 8 cent) "DCCC")
+                           ((= 9 cent) "CM"))))
+    (concat roman-cent roman-rem)))
+
+(defun up-to-3000(number)
+  (let* ((k (/ number 1000))
+         (rem (% number 1000))
+         (roman-rem (up-to-100 rem))
+         (roman-k (cond ((= 1 k) "M")
+                        ((= 2 k) "MM")
+                        ((= 3 k) "MMM"))))
+    (concat roman-k roman-rem)))
+
+(provide 'roman-numerals)
+;;; roman-numerals.el ends here

@@ -5,19 +5,18 @@
 ;;; Code:
 (defun nucleotide-count(dna)
   "Counts nucleotides"
-  (let ((result '((?A . 0) (?C . 0) (?G . 0) (?T . 0))))
+  (let ((a-count 0)
+        (c-count 0)
+        (g-count 0)
+        (t-count 0))
     (mapc (lambda(char)
-                (cond ((= char ?A) (setq result (update-count result ?A)))
-                      ((= char ?C) (setq result (update-count result ?C)))
-                      ((= char ?G) (setq result (update-count result ?G)))
-                      ((= char ?T) (setq result (update-count result ?T)))
-                      (t (error "Unknown nucleotide")))) dna)
-    result))
-
-(defun update-count(count char)
-  (let* ((previous-value (car (assoc char count)))
-         (new-value (1+ previous-value)))
-    (cons (char . new-value) (assq-delete-all char count)))))
+                  (cond ((= char ?A) (setq a-count (1+ a-count)))
+                        ((= char ?C) (setq c-count (1+ c-count)))
+                        ((= char ?G) (setq g-count (1+ g-count)))
+                        ((= char ?T) (setq t-count (1+ t-count)))
+                        (t (error "Unknown nucleotide"))))
+          dna)
+    `((?A . ,a-count) (?C . ,c-count) (?G . ,g-count) (?T . ,t-count))))
 
 (provide 'nucleotide-count)
 ;;; nucleotide-count.el ends here
